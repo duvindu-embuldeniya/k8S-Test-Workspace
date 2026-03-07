@@ -1,0 +1,55 @@
+kubectl create,delete -f nginx-pod.yml
+--dry-run=client -o yaml 
+:- is used to simulate creating or modifying a resource without actually applying it to the Kubernetes cluster.👍
+
+kubectl create -f nginx-pod.yml --dry-run=client -o yaml
+
+pod....
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers: 
+  - image: nginx:1.27.0
+    name: nginx-container
+    ports:
+    - containerPort: 80
+
+
+
+kubectl create -f nginx-svc.yml
+
+
+service....
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx        # to see both the service and pods belong to same application/group
+spec:
+  type: NodePort
+  ports:              
+    - port: 80        # port which Service listens for incoming traffic.
+      protocol: TCP
+      targetPort: 80  # where traffic should re-direct
+  selector: 
+    app: nginx        # service gonna looks pods have this label
+
+
+| Field                     | Must match Pod? | Used for              |
+| ------------------------- | --------------- | --------------------- |
+| Pod `metadata.labels`     | —               | Tag Pod               |
+| Service `metadata.labels` | No              | Tag Service           |
+| Service `spec.selector`   | Yes             | Connect Service → Pod |
+
+kubectl get pods nginx-pod -o yaml
+Retrieves the details of the pod named nginx-pod from the Kubernetes cluster.
+
+
+
+kubectl diff,apply -f nginx-pod.yml
+
