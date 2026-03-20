@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+  labels:
+    app: django-app
+  annotations:
+    "kubernetes.io/change-cause": "initial state"
+spec:
+  replicas: 5
+  selector: 
+    matchLabels: 
+      app: django-app      # which pods to be managed
+  template:
+    metadata:
+      labels:
+        app: django-app    # Ensures newly created Pods match the selector.
+    spec:
+      containers:
+      - name: django-app
+        image: duvindune/repo1:v1
+        ports:
+          - containerPort: 8000
