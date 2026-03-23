@@ -3,14 +3,14 @@ kubectl create configmap app-config --from-literal=APP_ENV=dev
 
 kubectl get configmap
 
-kubectl describe configmap app-configmap
+kubectl describe configmap app-config
 
 //edit configmap values without touching image file
-kubectl edit configmap app-configmap
+kubectl edit configmap app-config
 
 
 
-
+ 
 //create secret
 kubectl create secret generic db-secret --from-literal=DB_PASSWORD=admin123
 

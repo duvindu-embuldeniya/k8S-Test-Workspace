@@ -1,3 +1,10 @@
+//DOCKER HUB PART...//
+docker tag simply:latest <your-dockerhub-username>/<repo1:v1.0>
+docker push <your-dockerhub-username>/<repo1:v1.0>
+pull it
+docker run -p 8000:8000 duvindune/repo1:v1.0
+
+
 //create a pod...............................................................
 kubectl run nginx-pod --image=nginx
 >>nginx image will be pulled from dockerhub
@@ -24,7 +31,6 @@ kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   37m
 //check the logs of a pod....................................................
 kubectl logs nginx-pod
 
-kubeclt exec -it nginx2 -- /bin/bash
 
 //access a pod (pod's terminal)..............................................
 kubectl exec -it nginx-pod -- /bin/bash

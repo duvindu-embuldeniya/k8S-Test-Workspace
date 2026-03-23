@@ -5,7 +5,7 @@
 ||emptyDir -> temporary storage shared between containers in a pod
               (when pod get deleted, volume get deleted)
 
-
+ 
 >kubectl apply -f emptydir_share.yml
 
 
