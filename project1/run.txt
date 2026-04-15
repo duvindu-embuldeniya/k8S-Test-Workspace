@@ -1,0 +1,44 @@
+gcloud version
+gcloud init
+
+gcloud config list
+gcloud auth list
+
+after creating cluster...//
+cloud container clusters list
+
+.....
+gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
+(plugin install)
+gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
+.....
+
+kubectl config current-context
+
+kubectl config use-context kind-kind-3node
+kubectl config current-context
+
+kubectl config get-contexts
+
+
+kubectl describe managedcertificate
+kubectl get managedcertificate
+
+kubectl describe ingress django-ingress
+
+
+
+
+r53 nameservers -> cloudF
+External static ip reservation form gcp
+
+[1]ingress -> x3 annotations...///
+1. point static ip nameservers
+2. use this lb
+3. point cert
+
+...as backend svc
+use node service...///
+
+[2]node-svc manifest
+[3]cert manifest
