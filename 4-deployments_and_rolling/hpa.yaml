@@ -1,0 +1,75 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: django-deployment-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: django-deployment
+
+  minReplicas: 5
+  maxReplicas: 10
+
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+
+
+
+
+# 👉 metrics-server
+#Metrics Server = collects CPU and memory usage of pods and nodes in Kubernetes.
+# It lets Kubernetes........................
+#see how much CPU/memory each pod is using
+#power HPA (autoscaling)
+
+# check metric-server already running
+# kubectl get pods -n kube-system | findstr metrics
+
+
+# install metrics-server (1)
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+
+# (2) check metrics-server
+# kubectl get pods -n kube-system | findstr metrics
+
+# metrics-server = 0/1 Running means:
+# ❌ Metrics system is NOT working yet
+# ❌ HPA cannot function
+
+
+# (3)Find the exact error
+# kubectl describe pod <metrics-server-f77f4b875-dpb42> -n kube-system
+# Your app probes are OK, but metrics-server fails because it cannot collect metrics from the cluster (kubelet communication issue).
+
+
+# 1️⃣ Edit metrics-server
+# kubectl edit deployment metrics-server -n kube-system
+
+
+# 2️⃣ Replace args with this (IMPORTANT)
+# args:
+#   - --cert-dir=/tmp
+#   - --secure-port=10250
+#   - --kubelet-insecure-tls
+#   - --kubelet-preferred-address-types=InternalIP
+#   - --metric-resolution=15s
+
+
+# 3️⃣ Restart it
+# kubectl rollout restart deployment metrics-server -n kube-system
+
+
+# kubectl get pods -n kube-system | findstr metrics
+# 1/1 Running
+
+
+# Final test (MOST IMPORTANT)
+# kubectl top nodes
+# kubectl top pods

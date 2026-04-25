@@ -1,6 +1,4 @@
 > kubectl apply -f service.yml (headless service -> no service ip)
-> kubectl apply -f statefulset.yml (for pods -> persistance storage, stable name)
-> kubectl get pods
 
 |check these pods have persistance storage
  > kubectl get pvc
@@ -10,7 +8,13 @@
 > echo "data from web-0" > /data/file.txt
 
 |delete that pod
+|go to web-0 pod
 |check it get re-create as web-0
 |check that file still exist in pod
+> kubectl exec -it web-0 -- sh
+> cat /data/file.txt
 
-> kubectl exec -it web-0 -- cat /usr/share/nginx/html/index.html
+
+👉 StatefulSet = keeps pod identity + PVC
+👉 Headless Service = gives stable DNS per pod
+   ex:- backend + db (statefulset) -> stable host name... 

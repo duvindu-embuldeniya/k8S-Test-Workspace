@@ -9,14 +9,3 @@ kubectl rollout history deployment/nginx-deploy --revision=1
 
 //rollback...
 kubectl rollout undo deployment/nginx-deploy --to-revision=1
-
-
-
-
-
-//manual scale
-kubectl scale deployment nginx-deploy --replicas=5
-
-//auto scaling (horizontal pods autoscaler)
-kubectl autoscale deployment nginx-deploy --cpu-percent=50 --min=8 --max=10
-kubectl delete hpa nginx-deploy

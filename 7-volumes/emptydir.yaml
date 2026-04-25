@@ -6,17 +6,19 @@ spec:
   volumes:
     - name: shared-storage   # Shared volume name
       emptyDir: {}           # Temporary storage (deleted when Pod is deleted)
+
   containers:
     - name: writer           # First container (writes data)
-      image: duvindune/repo1:v1
+      image: duvindune/repo11:v1.0
       volumeMounts:
         - name: shared-storage
           mountPath: /duvindu   # Writer writes data here
-    - name: reader           # Second container (reads data)
-      image: duvindune/repo2:v1
+
+    - name: reader           # Second container (now nginx)
+      image: nginx:latest
       volumeMounts:
         - name: shared-storage  # Mount the same shared volume
-          mountPath: /niduvara      # Reader reads data from here
+          mountPath: /usr/share/nginx/html      # nginx serves from here
 
 
 
@@ -26,4 +28,4 @@ spec:
 # exit
 
 # kubectl exec -it emptydir-share-demo -c reader -- /bin/bash
-# cat /niduvara/test.txt
+# cat /usr/share/nginx/html/test.txt

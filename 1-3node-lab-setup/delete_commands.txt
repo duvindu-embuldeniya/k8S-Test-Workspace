@@ -1,7 +1,7 @@
 ///Lists all existing KIND clusters on your machine///
 kind get clusters
 
-///Deletes the specified KIND cluster (stops it's containers and networks)///
+///Stops it's containers and networks///
 kind delete cluster --name kind-3node
 
 ///Shows all Docker images stored locally///

@@ -1,7 +1,0 @@
-kubectl apply -f replicaset-demo.yml
-
-kubectl get rs 
-
-kubectl get pods -l app=myapp
-
-kubectl delete pod <name>

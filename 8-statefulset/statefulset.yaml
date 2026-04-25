@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: stateful-svc  # link with service.yml
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: web    # which pods to be managed
+
+  template:
+    metadata:
+      labels:
+        app: web  # Ensures newly created Pods match the selector.
+
+    spec:
+      containers:
+        - name: django-app
+          image: duvindune/repo11:v1.0
+
+          ports:
+            - containerPort: 8000
+
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          startupProbe:
+            httpGet:
+              path: /health/startup/
+              port: 8000
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 60
+
+          readinessProbe:
+            httpGet:
+              path: /health/ready/
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health/live/
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          volumeMounts:
+            - name: data ## (a)
+              mountPath: /data
+
+  volumeClaimTemplates:  # to create a persistence storage for pods
+    - metadata:
+        name: data        ## (b), a & b should same
+      spec:
+        accessModes: ["ReadWriteOnce"]  # how used by pods
+        resources:
+          requests:
+            storage: 1Gi

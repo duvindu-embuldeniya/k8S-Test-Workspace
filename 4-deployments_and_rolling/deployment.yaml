@@ -1,23 +1,65 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: django-deployment
   labels:
-    app: nginx
+    app: django
   annotations:
-    "kubernetes.io/change-cause": "initial state"
+    "kubernetes.io/change-cause": "Initial State"
 spec:
   replicas: 5
   selector: 
     matchLabels: 
-      app: nginx      # which pods to be managed
+      app: django # which pods to be managed
   template:
     metadata:
       labels:
-        app: nginx    # Ensures newly created Pods match the selector.
+        app: django # Ensures newly created Pods match the selector.
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.27.4
+      - name: django-container
+        image: duvindune/repo11:v1.0
         ports:
-          - containerPort: 80
+          - containerPort: 8000
+
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
+        startupProbe:
+          httpGet:
+            path: /health/startup/
+            port: 8000
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 60
+
+        readinessProbe:
+          httpGet:
+            path: /health/ready/
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
+
+        livenessProbe:
+          httpGet:
+            path: /health/live/
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 3
+
+
+# initialDelaySeconds → wait time before first check starts
+# periodSeconds → how often to run the check
+# timeoutSeconds → max time to wait for a response
+# failureThreshold → how many failures allowed before action (no traffic/restart)
+

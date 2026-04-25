@@ -15,5 +15,5 @@ spec:
     app: django        # service gonna looks pods have this label
 
 
-#kubectl port-forward service/nginx-svc 8000:80
-#http://localhost:80
+#kubectl port-forward service/django-svc 8888:8000
+#http://localhost:8888

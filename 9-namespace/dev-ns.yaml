@@ -4,6 +4,8 @@ metadata:
   name: dev
 
 ---
+# If you don’t specify resources in Deployment
+# each pod gets this limit individually
 apiVersion: v1
 kind: LimitRange
 metadata:
@@ -27,19 +29,8 @@ metadata:
   namespace: dev
 spec:
   hard:
+    # All pods together in dev namespace cannot exceed:
     requests.cpu: "1250m"
     requests.memory: "320Mi"
     limits.cpu: "2500m"
     limits.memory: "640Mi"
-
-
-# from deployment...
-        # resources:
-        #   requests:
-        #     memory: "64Mi"
-        #     cpu: "250m"
-        #   limits:
-        #     memory: "128Mi"
-        #     cpu: "500m"
-
-# kubectl get resourcequota

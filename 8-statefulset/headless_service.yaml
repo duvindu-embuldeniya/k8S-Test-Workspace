@@ -8,3 +8,4 @@ spec:
     app: web    # to which pods service going to apply
   ports:
     - port: 8000
+      targetPort: 8000
