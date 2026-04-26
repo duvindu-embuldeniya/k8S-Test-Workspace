@@ -30,8 +30,10 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-      - name: Setup gcloud CLI
+      - name: Setup gcloud CLI (WITH GKE PLUGIN)
         uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: "gke-gcloud-auth-plugin"
 
       # =========================
       # DOCKER AUTH
@@ -61,7 +63,7 @@ jobs:
           gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${CLUSTER_REGION}
 
       # =========================
-      # APPLY MANIFEST (NO EDITING)
+      # DEPLOY
       # =========================
       - name: Deploy to Kubernetes
         run: kubectl apply -f project2/deployment.yaml
