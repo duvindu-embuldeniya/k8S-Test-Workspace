@@ -1,0 +1,75 @@
+name: Build + Push + Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GCP_PROJECT: ${{ secrets.GOOGLE_PROJECT }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
+      REPO: test-repo
+      IMAGE_NAME: simply
+      IMAGE_TAG: ${{ github.run_number }}
+      CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
+      CLUSTER_REGION: ${{ secrets.GKE_REGION }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # =========================
+      # AUTH TO GCP
+      # =========================
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      # =========================
+      # CONFIGURE DOCKER FOR GAR
+      # =========================
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${GCP_REGION}-docker.pkg.dev
+
+      # =========================
+      # BUILD IMAGE
+      # =========================
+      - name: Build Docker Image
+        run: |
+          docker build -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPO}/${IMAGE_NAME}:${IMAGE_TAG} ./application2
+
+      # =========================
+      # PUSH IMAGE
+      # =========================
+      - name: Push Docker Image
+        run: |
+          docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPO}/${IMAGE_NAME}:${IMAGE_TAG}
+
+    #   # =========================
+    #   # CONNECT TO GKE
+    #   # =========================
+    #   - name: Get GKE credentials
+    #     run: |
+    #       gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${CLUSTER_REGION}
+
+    #   # =========================
+    #   # APPLY K8S MANIFESTS
+    #   # =========================
+    #   - name: Apply Kubernetes manifests
+    #     run: kubectl apply -f resources.yaml
+
+    #   # =========================
+    #   # UPDATE IMAGE (TRIGGERS ROLLOUT)
+    #   # =========================
+    #   - name: Update Deployment Image
+    #     run: |
+    #       kubectl set image deployment/${{ secrets.K8S_DEPLOYMENT_NAME }} \
+    #       nginx=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPO}/${IMAGE_NAME}:${IMAGE_TAG}
