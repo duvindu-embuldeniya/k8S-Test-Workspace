@@ -1,4 +1,7 @@
 #  Application2 Workflow...-------------------------------------------------
+  
+  # >>>gke-gcloud-auth-plugin + to workflow
+  # >>>k8s engine developer role + to service account
 
 name: Build + Push + Deploy to GKE
 
