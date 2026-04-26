@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: django-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: k8s-test-app # match with reserved external static ip
+    kubernetes.io/ingress.class: 'gce' # Kubernetes creates a Google Cloud HTTP(S) Load Balancer, “Use Google’s load balancer for this Ingress”
+    networking.gke.io/managed-certificates: django-mc # match with managed cert
+
+spec:
+  rules:
+  - host: duvindu.org
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: django-node-svc # match with node svc
+            port:
+              number: 8000
+
+  - host: www.duvindu.org
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: django-node-svc # match with node svc
+            port:
+              number: 8000
+
+

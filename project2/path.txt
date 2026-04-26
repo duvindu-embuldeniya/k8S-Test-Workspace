@@ -5,7 +5,7 @@ gcloud config list
 gcloud auth list
 
 after creating cluster...//
-cloud container clusters list
+gcloud container clusters list
 
 .....
 gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
@@ -21,21 +21,23 @@ kubectl config current-context
 kubectl config get-contexts
 
 
-kubectl describe managedcertificate
-kubectl get managedcertificate
 
-kubectl describe ingress django-ingress
+------------------------------------------------
 
 
 
+1. (secret + deployment + hpa)
 
 r53 nameservers -> cloudF
 (keep proxy status down)
 
-External static ip reservation form gcp
+External static ip (global) reservation form gcp
+>> as we use managed cert + ingress via google
+
+|| setup in cloudflare
 
 [1]ingress -> x3 annotations...///
-1. point static ip name
+1. point global static ip name
 2. use this lb
 3. point cert
 
@@ -45,4 +47,11 @@ use node service...///
 [2]node-svc manifest
 [3]cert manifest
 
-after cert got active enable proxy status of CF..//
+(svc -> cert -> ingress)
+
+* kubectl get managedcertificate <>
+* kubectl describe managedcertificate <>
+* kubectl describe ingress <>
+
+
+|| after cert got provisioned enable proxy status of CF
