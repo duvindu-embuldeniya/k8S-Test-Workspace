@@ -7,7 +7,7 @@ metadata:
   annotations:
     "kubernetes.io/change-cause": "initial state"
 spec:
-  replicas: 1
+  replicas: 5
   # strategy:
   #   type: RollingUpdate
   #   rollingUpdate:
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: django
-        image: us-west4-docker.pkg.dev/duvindu-493407/test-repo/simply:18
+        image: us-west4-docker.pkg.dev/duvindu-493407/test-repo/simply:19
         ports:
           - containerPort: 8000
 
