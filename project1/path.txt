@@ -1,0 +1,57 @@
+gcloud version
+gcloud init
+
+gcloud config list
+gcloud auth list
+
+after creating cluster...//
+gcloud container clusters list
+
+.....
+gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
+(plugin install)
+gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
+.....
+
+kubectl config current-context
+
+kubectl config use-context kind-kind-3node
+kubectl config current-context
+
+kubectl config get-contexts
+
+
+
+------------------------------------------------
+
+
+
+1. (secret + deployment + hpa)
+
+r53 nameservers -> cloudF
+(keep proxy status down)
+
+External static ip (global) reservation form gcp
+>> as we use managed cert + ingress via google
+
+|| setup in cloudflare
+
+[1]ingress -> x3 annotations...///
+1. point global static ip name
+2. use this lb
+3. point cert
+
+...as backend svc
+use node service...///
+
+[2]node-svc manifest
+[3]cert manifest
+
+(svc -> cert -> ingress)
+
+* kubectl get managedcertificate <>
+* kubectl describe managedcertificate <>
+* kubectl describe ingress <>
+
+
+|| after cert got provisioned enable proxy status of CF
