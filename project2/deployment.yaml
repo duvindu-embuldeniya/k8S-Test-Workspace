@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: django
-        image: us-west4-docker.pkg.dev/duvindu-493407/test-repo/simply:${IMAGE_TAG}
+        image: us-west4-docker.pkg.dev/duvindu-493407/test-repo/simply:18
         ports:
           - containerPort: 8000
 
