@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment        # Name of the Deployment
+  labels:
+    app: nginx                  # Label to identify app
+spec:
+  replicas: 1                   # Number of pods
+  selector:
+    matchLabels:
+      app: nginx                # Must match pod labels
+  template:
+    metadata:
+      labels:
+        app: nginx              # Pod label
+    spec:
+      containers:
+        - name: nginx           # Container name
+          image: nginx:1.27.0   # Nginx image version
+          ports:
+            - containerPort: 80 # Expose port 80 inside container

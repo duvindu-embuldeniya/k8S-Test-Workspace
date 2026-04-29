@@ -1,0 +1,19 @@
+apiVersion: v2
+# Helm chart API version
+# Helm uses this to understand chart format
+
+name: nginx
+# Name of the chart
+
+description: Deploy Nginx on Kubernetes using Helm
+# What this chart is used for
+
+type: application
+# This chart deploys an application (not a library)
+
+version: 0.1.0
+# Version of the chart itself 
+# Increment when chart changes
+
+appVersion: "1.27.0"
+# Version of the Nginx app being deployed
