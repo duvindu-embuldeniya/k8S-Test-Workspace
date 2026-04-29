@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment        # Name of the Deployment
+  name: {{ .Release.Name }}-{{ .Chart.Name }}   
   labels:
-    app: nginx                  # Label to identify app
+    app: {{ .Chart.Name }}                    
 spec:
-  replicas: 1                   # Number of pods
+  replicas: {{ .Values.replicaCount }}                   
   selector:
     matchLabels:
-      app: nginx                # Must match pod labels
+      app: {{ .Chart.Name }}
+      release: {{ .Release.Name }}               
   template:
     metadata:
       labels:
-        app: nginx              # Pod label
+        app: {{ .Chart.Name }}   
+        release: {{ .Release.Name }}  
     spec:
       containers:
-        - name: nginx           # Container name
-          image: nginx:1.27.0   # Nginx image version
+        - name: nginx           
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }} 
           ports:
-            - containerPort: 80 # Expose port 80 inside container
+            - containerPort: 80 

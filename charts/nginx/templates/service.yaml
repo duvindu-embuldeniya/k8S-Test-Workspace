@@ -1,12 +1,14 @@
+{{ if .Values.service.enable }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service        # Service name
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-svc      
 spec:
-  type: ClusterIP            # Internal service (default type)
+  type: {{ .Values.service.type}}            
   selector:
-    app: nginx               # Must match pod label
+    app: nginx              
   ports:
     - protocol: TCP
-      port: 80               # Service port
-      targetPort: 80         # Container port
+      port: {{ .Values.service.port }}              
+      targetPort: {{ .Values.service.port }}         
+{{ end }}

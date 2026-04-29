@@ -1,0 +1,11 @@
+test: {{ replace "" "" .Values.test }}
+labels:
+    {{/* app label comes from Release/Install */}}
+    app: {{ .Release.Name }}    
+    chart: {{ .Chart.Name }}
+
+    {{ if eq ( lower .Values.environment ) "production"}}
+    stage: duvindu
+    {{ else }}
+    stage: niduvara
+    {{ end }}
