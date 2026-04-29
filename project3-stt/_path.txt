@@ -1,0 +1,22 @@
+kubectl apply -f db-secret.yaml
+kubectl apply -f db-headless-svc.yaml
+kubectl apply -f db-statefulset.yaml
+
+
+>>> kubectl get statefulset
+
+
+kubectl apply -f app-secret.yaml
+kubectl apply -f app-deployment.yaml
+kubectl apply -f app-svc.yaml
+
+
+
+>>> kubectl get all
+>>> kubectl delete all --all
+>>> <delete pvc also>
+
+>>> kubectl exec -it <any_pod> -- python manage.py migrate
+
+>>> kubectl port-forward service/django-svc 8888:8000
+>>> http://localhost:8888

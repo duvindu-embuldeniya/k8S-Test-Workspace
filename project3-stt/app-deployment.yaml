@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: django
+
+  template:
+    metadata:
+      labels:
+        app: django
+
+    spec:
+      containers:
+        - name: django
+          image: duvindune/repo15:v1.0
+
+          ports:
+            - containerPort: 8000
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-secret
+                  key: SECRET_KEY
+
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+
+            - name: POSTGRES_HOST
+              value: postgres-svc
+
+            - name: POSTGRES_PORT
+              value: "5432"
