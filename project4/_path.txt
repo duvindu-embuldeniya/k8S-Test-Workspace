@@ -1,0 +1,24 @@
+kubectl apply -f db-secret.yaml
+kubectl apply -f db-headless-svc.yaml
+kubectl apply -f db-statefulset.yaml
+>>> kubectl get statefulset
+
+kubectl apply -f back-deployment.yaml
+>>> kubectl get pods
+kubectl apply -f back-c-svc.yaml
+
+kubectl apply -f front-deployment.yaml
+>>> kubectl get pods
+kubectl apply -f front-svc.yaml
+
+
+>>> kubectl get all
+>>> kubectl delete all --all
+>>> <delete pvc also>
+
+
+
+>>> kubectl exec -it <any_pod> -- python manage.py migrate
+
+>>> kubectl port-forward service/react-svc 80:80
+>>> http://localhost:80

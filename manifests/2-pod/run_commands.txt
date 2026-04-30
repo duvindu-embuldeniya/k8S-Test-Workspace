@@ -3,7 +3,7 @@ docker tag simply:latest <your-dockerhub-username>/<repo1:v1.0>
 docker push <your-dockerhub-username>/<repo1:v1.0>
 pull it
 docker run -p 8000:8000 duvindune/repo1:v1.0
-
+ 
 
 //create a pod...............................................................
 kubectl run nginx-pod --image=nginx
