@@ -1,0 +1,6 @@
+index-0lGsTXmq.js:13 
+ POST http://django-svc:8000/api/v1/register/ net::ERR_NAME_NOT_RESOLVED
+index-0lGsTXmq.js:16 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'data')
+    at q (index-0lGsTXmq.js:16:5855)
+
+﻿

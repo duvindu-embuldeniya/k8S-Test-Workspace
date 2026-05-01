@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: react
-          image: duvindune/repo26:v1.0
+          image: duvindune/repo29:v1.0
 
           ports:
             - containerPort: 80
