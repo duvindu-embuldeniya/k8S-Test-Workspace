@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: django
-          image: duvindune/repo25:v1.0
+          image: duvindune/repo31:v1.0
 
           ports:
             - containerPort: 8000

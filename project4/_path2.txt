@@ -14,7 +14,7 @@ django-svc  ❌ (from YOUR laptop / browser)
 
 1. Change frontend API base URL
 In React Docker File:
-VITE_SERVER_BASE_URL=/api/v1
+ENV VITE_SERVER_BASE_URL=/api/v1/
 
 
 2. Update your Nginx config
@@ -28,8 +28,8 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    location /api/ {
-        proxy_pass http://django-svc:8000/api/;
+    location /api/v1/ {
+        proxy_pass http://django-svc:8000/api/v1/;
     }
 }
 
