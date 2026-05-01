@@ -3,6 +3,17 @@ docker tag simply:latest <your-dockerhub-username>/<repo1:v1.0>
 docker push <your-dockerhub-username>/<repo1:v1.0>
 pull it
 docker run -p 8000:8000 duvindune/repo1:v1.0
+
+
+
+//GAR PART...//
+gcloud auth login
+gcloud config set project YOUR_PROJECT_ID
+gcloud auth configure-docker REGION-docker.pkg.dev
+
+
+
+
  
 
 //create a pod...............................................................

@@ -24,16 +24,16 @@ spec:
     spec:
       containers:
       - name: django
-        image: us-west4-docker.pkg.dev/duvindu-493407/test-repo/simply:25
+        image: duvindune/repo36:v1.0
         ports:
           - containerPort: 8000
 
-        env:
-          - name: SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: dj-app
-                key: SECRET_KEY
+        # env:
+        #   - name: SECRET_KEY
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: dj-app
+        #         key: SECRET_KEY
 
         resources:
           requests:
