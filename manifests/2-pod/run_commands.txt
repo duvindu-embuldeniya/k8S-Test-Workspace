@@ -12,6 +12,10 @@ gcloud config set project YOUR_PROJECT_ID
 gcloud auth configure-docker REGION-docker.pkg.dev
 
 
+europe-west4-docker.pkg.dev/duvindu-495014/test-repo
+docker tag simply:latest europe-west4-docker.pkg.dev/duvindu-495014/test-repo/simply:latest
+docker push europe-west4-docker.pkg.dev/duvindu-495014/test-repo/simply:latest
+
 
 
  

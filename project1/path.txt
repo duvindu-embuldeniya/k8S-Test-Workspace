@@ -13,12 +13,11 @@ gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
 gcloud container clusters get-credentials <demo-cluster> --region <asia-south1>
 .....
 
-kubectl config current-context
-
-kubectl config use-context kind-kind-3node
-kubectl config current-context
-
 kubectl config get-contexts
+kubectl config current-context
+
+kubectl config use-context <kind-kind-3node>
+kubectl config delete-context <gke_duvindu-495014_europe-west4_demo-cluster>
 
 
 
