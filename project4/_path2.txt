@@ -1,0 +1,47 @@
+React app runs in the browser, not inside cluster
+
+
+So when the browser executes:
+POST http://django-svc:8000/api/v1/register/
+
+
+it tries to resolve:
+django-svc  ❌ (from YOUR laptop / browser)
+
+
+✔️ Use Nginx as Reverse Proxy
+
+
+1. Change frontend API base URL
+In React Docker File:
+VITE_SERVER_BASE_URL=/api/v1
+
+
+2. Update your Nginx config
+server {
+    listen 80;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://django-svc:8000/api/;
+    }
+}
+
+
+3. Flow becomes
+
+Browser
+   ↓
+react-svc (NodePort)
+   ↓
+Nginx (inside container)
+   ↓
+django-svc (ClusterIP)
+   ↓
+Django pods
