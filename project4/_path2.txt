@@ -44,3 +44,27 @@ Nginx (inside container)
 django-svc (ClusterIP)
    ↓
 Django pods
+
+
+
+
+Browser → only runs HTML, CSS, JS
+Nginx → runs inside your React container (pod) in Kubernetes
+
+
+🔥 Real flow (clarified)
+
+Browser sends request:
+GET http://localhost/api/v1/register/
+
+That hits:
+react-svc (NodePort) → React pod → Nginx inside container
+
+Nginx sees:
+/api/v1/
+
+and applies:
+proxy_pass http://django-svc:8000/api/v1/;
+
+Now Nginx (inside the cluster) makes a new request:
+http://django-svc:8000/api/v1/register/
