@@ -1,0 +1,5 @@
+apiVersion: v2
+name: intro-go-templating
+description: learning-purpose
+version: 0.1.0
+appVersion: 0.1.0

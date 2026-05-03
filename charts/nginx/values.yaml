@@ -1,10 +1,15 @@
-replicaCount: 3
 
-image:
-  name: nginx
-  tag: 1.27.0 
+deployment:
+  replicaCount: 1
+  image:
+    name: nginx
+    tag: 1.27.0
+  ports:
+    containerPort: 80
+
 
 service:
-  enable: true
+  enabled: false
   type: ClusterIP
   port: 80
+  targetPort: 80

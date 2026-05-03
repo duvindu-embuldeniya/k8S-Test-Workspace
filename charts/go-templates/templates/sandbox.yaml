@@ -1,0 +1,14 @@
+{{/* duvindu */}}
+# comment: duvindu
+test: {{ lower ( replace "u" "W" .Values.test ) }}
+test: {{ replace "u" "W" .Values.test | lower }}
+
+labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+
+{{ if eq .Values.environment "production" }}
+environment: duvindu
+{{ else }}
+environment: niduvara
+{{ end }}

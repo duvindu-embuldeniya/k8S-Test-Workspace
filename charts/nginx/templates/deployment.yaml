@@ -1,23 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-{{ .Chart.Name }}   
+  name:  {{ .Release.Name }}-{{ .Chart.Name }}
   labels:
-    app: {{ .Chart.Name }}                    
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}       
+  annotations:
+    "kubernetes.io/change-cause": "initial state"
 spec:
-  replicas: {{ .Values.replicaCount }}                   
-  selector:
-    matchLabels:
+  replicas: {{ .Values.deployment.replicaCount }}
+  selector: 
+    matchLabels: 
       app: {{ .Chart.Name }}
-      release: {{ .Release.Name }}               
+      release: {{ .Release.Name }}       
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}   
-        release: {{ .Release.Name }}  
+        app: {{ .Chart.Name }}
+        release: {{ .Release.Name }}            
     spec:
       containers:
-        - name: nginx           
-          image: {{ .Values.image.name }}:{{ .Values.image.tag }} 
-          ports:
-            - containerPort: 80 
+      - name: nginx
+        image: {{ .Values.deployment.image.name }}:{{ .Values.deployment.image.tag }}
+        ports:
+          - containerPort: {{ .Values.deployment.ports.containerPort}}
+        resources:
+          requests:
+            cpu: "100m"        
+            memory: "128Mi"   
+          limits:
+            cpu: "500m"        
+            memory: "256Mi"    
